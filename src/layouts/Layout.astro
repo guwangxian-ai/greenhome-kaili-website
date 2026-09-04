@@ -1,0 +1,67 @@
+---
+import Header from '../components/Header';
+import Footer from '../components/Footer.astro';
+import { company } from '../data/company';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+  noindex?: boolean;
+}
+
+const {
+  title = '凯里绿色家装饰｜新房装修、旧房翻新与住宅设计',
+  description = company.description,
+  schema,
+  noindex = false,
+} = Astro.props;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const shareImage = Astro.site ? new URL('/images/hero.webp', Astro.site).href : undefined;
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'HomeAndConstructionBusiness',
+  name: company.fullName,
+  alternateName: company.shortName,
+  description: company.description,
+  telephone: '+86-19885332380',
+  foundingDate: company.foundingDate,
+  ...(Astro.site ? { url: Astro.site.href } : {}),
+  address: {
+    '@type': 'PostalAddress', addressCountry: 'CN', addressRegion: '贵州省黔东南苗族侗族自治州',
+    addressLocality: '凯里市', streetAddress: '城西街道迎宾大道77号隆源公馆商铺11-2-202',
+  },
+  areaServed: company.serviceArea.map((name) => ({ '@type': 'Place', name })),
+};
+const schemas = [organization, ...(schema ? (Array.isArray(schema) ? schema : [schema]) : [])];
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#254d3d" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
+    <meta name="generator" content={Astro.generator} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content={company.shortName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {shareImage && <meta property="og:image" content={shareImage} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    {schemas.map((entry) => <script is:inline type="application/ld+json" set:html={JSON.stringify(entry).replace(/</g, '\\u003c')} />)}
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <Header client:load />
+    <slot />
+    <Footer />
+  </body>
+</html>

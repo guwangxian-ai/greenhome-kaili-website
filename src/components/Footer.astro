@@ -1,0 +1,15 @@
+---
+import { company } from '../data/company';
+---
+<footer class="site-footer">
+  <div class="footer-top container">
+    <a href="/" class="footer-brand">{company.displayName}<span>让生活，回到喜欢的样子。</span></a>
+    <div class="footer-links"><a href="/#services">装修服务</a><a href="/#inspiration">空间灵感</a><a href="/guides/">装修指南</a><a href="/#contact">联系我们</a></div>
+    <a class="footer-phone" href={company.tel}>{company.phone}<span>凯里及黔东南住宅装修咨询</span></a>
+  </div>
+  <div class="footer-bottom container">
+    <span>© {new Date().getFullYear()} {company.fullName}</span>
+    <span>空间图片为灵感参考，非公司交付案例。</span>
+    <a href="/privacy/">隐私说明</a>
+  </div>
+</footer>

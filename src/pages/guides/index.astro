@@ -1,0 +1,23 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { guides } from '../../data/company';
+const images = ['/images/detail.webp', '/images/living.webp', '/images/kitchen.webp'];
+---
+<Layout title="装修指南｜凯里绿色家装饰" description="从报价比较、旧房翻新到水电防水验收，了解装修前值得问清楚的事。凯里绿色家装饰装修指南。">
+  <main id="main-content" class="site-main">
+    <div class="page-intro container">
+      <div class="breadcrumb"><a href="/">首页</a><span>/</span><span>装修指南</span></div>
+      <p class="section-kicker">多了解一点，决定从容一点</p>
+      <h1>给家的每一个决定，<br />多一点底气。</h1>
+      <p>把复杂的装修问题，拆成看得懂的细节。从选公司、看报价到施工验收，先了解，再做适合自己的选择。</p>
+    </div>
+    <div class="guide-grid guides-index-grid container">
+      {guides.map((guide, index) => <a class="guide-card" href={`/guides/${guide.slug}/`}>
+        <div class="guide-image"><img src={images[index]} width="1000" height="700" alt={`${guide.category}的家居场景示意`} loading={index > 0 ? 'lazy' : 'eager'} /><span class="guide-image-label">{guide.category}</span></div>
+        <div class="guide-meta"><span>装修指南</span><span>约 {guide.readingMinutes} 分钟阅读</span></div>
+        <h2 style="font-family:var(--sans);font-size:21px;margin-top:13px;line-height:1.7">{guide.title}</h2>
+        <p>{guide.description}</p><span class="guide-read">展开阅读<span aria-hidden="true">↗</span></span>
+      </a>)}
+    </div>
+  </main>
+</Layout>

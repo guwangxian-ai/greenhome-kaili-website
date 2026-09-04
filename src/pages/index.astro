@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Home from '../components/Home';
+import { faqItems } from '../data/company';
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map(({ question, answer }) => ({
+    '@type': 'Question', name: question, acceptedAnswer: { '@type': 'Answer', text: answer },
+  })),
+};
+---
+<Layout schema={faqSchema}>
+  <Home client:load />
+</Layout>
