@@ -251,9 +251,16 @@ button {
   flex-shrink: 0;
   line-height: 1;
 }
+.company-logo-mask {
+  display: block;
+  flex: 0 0 auto;
+  background-color: currentColor;
+  -webkit-mask: url("/images/company-logo.png") center / contain no-repeat;
+  mask: url("/images/company-logo.png") center / contain no-repeat;
+}
 .brand-mark {
-  width: 37px;
-  height: 43px;
+  width: 42px;
+  height: 42px;
 }
 .brand-wordmark {
   font-size: 25px;
@@ -1175,7 +1182,17 @@ button {
   font-family: var(--serif);
   line-height: 1.5;
 }
-.footer-brand > span {
+.footer-brand-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  white-space: nowrap;
+}
+.footer-brand-mark {
+  width: 44px;
+  height: 44px;
+}
+.footer-brand-tagline {
   font-family: var(--sans);
   font-size: 10px;
   display: block;
@@ -2016,8 +2033,8 @@ button {
     gap: 8px;
   }
   .brand-mark {
-    width: 30px;
-    height: 35px;
+    width: 34px;
+    height: 34px;
   }
   .brand-wordmark {
     font-size: 18px;
@@ -2409,8 +2426,12 @@ button {
   .footer-brand {
     font-size: 29px;
   }
-  .footer-brand > span {
+  .footer-brand-tagline {
     font-size: 10px;
+  }
+  .footer-brand-mark {
+    width: 40px;
+    height: 40px;
   }
   .footer-phone {
     font-size: 22px;

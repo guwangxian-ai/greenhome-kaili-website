@@ -28,24 +28,7 @@ export default function Header() {
           aria-label={`${company.displayName}首页`}
           onClick={() => setOpen(false)}
         >
-          <svg
-            className="brand-mark"
-            viewBox="0 0 42 44"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M5 21 21 6l16 15v17H5V21Z"
-              stroke="currentColor"
-              strokeWidth="2"
-            />
-            <path
-              d="M14 28c0-8 12-12 15-11 1 9-5 16-13 14m0 0 10-11m-10 11-2 5"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-            />
-          </svg>
+          <span className="brand-mark company-logo-mask" aria-hidden="true" />
           <span className="brand-wordmark">
             {company.displayName}
             <span>{company.englishName}</span>
