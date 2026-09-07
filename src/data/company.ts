@@ -8,6 +8,12 @@ export interface CompanyInfo {
   address: string;
   shortAddress: string;
   foundingDate: string;
+  postalAddress: {
+    addressCountry: string;
+    addressRegion: string;
+    addressLocality: string;
+    streetAddress: string;
+  };
   serviceArea: string[];
   description: string;
 }
@@ -36,6 +42,9 @@ export interface Guide {
   description: string;
   category: string;
   readingMinutes: number;
+  publishedAt: string;
+  image: string;
+  relatedServiceIds: Service['id'][];
   sections: GuideSection[];
 }
 
@@ -50,6 +59,12 @@ export const company: CompanyInfo = {
     "贵州省黔东南苗族侗族自治州凯里市城西街道迎宾大道77号隆源公馆商铺11-2-202",
   shortAddress: "凯里市迎宾大道77号 · 隆源公馆",
   foundingDate: "2023-02-01",
+  postalAddress: {
+    addressCountry: "CN",
+    addressRegion: "贵州省",
+    addressLocality: "凯里市",
+    streetAddress: "城西街道迎宾大道77号隆源公馆商铺11-2-202",
+  },
   serviceArea: ["凯里", "黔东南"],
   description:
     "立足凯里，面向黔东南家庭，提供住宅设计、新房装修、旧房翻新与局部改造服务。关注材料选择、规范施工与过程沟通，让空间贴合一家人的日常。",
@@ -152,6 +167,9 @@ export const faqItems: FaqItem[] = [
 export const guides: Guide[] = [
   {
     slug: "compare-renovation-quotes",
+    publishedAt: "2026-09-04",
+    image: "/images/detail.webp",
+    relatedServiceIds: ["new-home", "design"],
     title: "看懂装修报价，先把两份清单放在同一把尺上",
     description:
       "总价之前，先核对项目范围、工程量、材料型号与变更规则，让每一笔预算有具体去处。",
@@ -183,6 +201,9 @@ export const guides: Guide[] = [
   },
   {
     slug: "plan-an-old-home-renovation",
+    publishedAt: "2026-09-04",
+    image: "/images/living.webp",
+    relatedServiceIds: ["renovation", "partial"],
     title: "旧房翻新之前，先决定什么值得留下",
     description:
       "从房屋现状和生活问题开始，理清保留、维修与更换的边界，再安排预算和施工。",
@@ -214,6 +235,9 @@ export const guides: Guide[] = [
   },
   {
     slug: "check-water-electricity-waterproofing",
+    publishedAt: "2026-09-04",
+    image: "/images/kitchen.webp",
+    relatedServiceIds: ["new-home", "renovation", "partial"],
     title: "水电与防水，验收要赶在它们被覆盖之前",
     description:
       "核对材料、检查重点节点、保留测试与影像记录，让看不见的工程也有据可查。",

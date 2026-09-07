@@ -1,32 +1,40 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { guides, company, type Guide } from '../../data/company';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { guides, company, services, type Guide } from '../../data/company';
+import { organizationId, siteUrl } from '../../lib/seo';
 export function getStaticPaths() { return guides.map((guide) => ({ params: { slug: guide.slug }, props: { guide } })); }
 interface Props { guide: Guide }
 const { guide } = Astro.props;
+const breadcrumbs = [{ name: '首页', path: '/' }, { name: '装修指南', path: '/guides/' }, { name: guide.category, path: `/guides/${guide.slug}/` }];
 const articleSchema = {
-  '@context': 'https://schema.org', '@type': 'Article', headline: guide.title,
+  '@type': 'Article', '@id': `${siteUrl(Astro.url.pathname, Astro.site)}#article`, headline: guide.title,
   description: guide.description, inLanguage: 'zh-CN',
-  author: { '@type': 'Organization', name: company.fullName },
-  ...(Astro.site ? { mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).href } : {}),
+  author: { '@id': organizationId(Astro.site) },
+  publisher: { '@id': organizationId(Astro.site) },
+  datePublished: guide.publishedAt,
+  image: siteUrl(guide.image, Astro.site),
+  mainEntityOfPage: { '@id': `${siteUrl(Astro.url.pathname, Astro.site)}#webpage` },
 };
 ---
-<Layout title={`${guide.title}｜凯里绿色家装饰装修指南`} description={guide.description} schema={articleSchema}>
+<Layout title={`${guide.title}｜凯里绿色家装饰装修指南`} description={guide.description} schema={articleSchema} breadcrumbs={breadcrumbs} image={guide.image} imageAlt={`${guide.category}的家居场景示意，非公司交付案例`} articlePublishedAt={guide.publishedAt}>
   <main id="main-content" class="site-main">
     <article class="article-shell">
-      <div class="breadcrumb"><a href="/">首页</a><span>/</span><a href="/guides/">装修指南</a><span>/</span><span>{guide.category}</span></div>
+      <Breadcrumbs items={breadcrumbs} />
       <header class="article-header">
         <p class="article-category">{guide.category}</p><h1>{guide.title}</h1><p class="article-lead">{guide.description}</p>
-        <div class="article-byline"><span>凯里绿色家装饰装修指南</span><span>约 {guide.readingMinutes} 分钟阅读</span></div>
+        <div class="article-byline"><a href="/about/">{company.fullName} 整理</a><time datetime={guide.publishedAt}>{guide.publishedAt.replaceAll('-', '.')}</time><span>约 {guide.readingMinutes} 分钟阅读</span></div>
       </header>
       <div class="article-layout">
         <div class="article-prose">
+          <figure class="article-image"><img src={guide.image} width="1200" height="750" alt={`${guide.category}的家居场景示意`} /><figcaption>空间灵感参考，非公司交付案例。</figcaption></figure>
           {guide.sections.map((section, index) => <section id={`point-${index + 1}`}><h2>{section.heading}</h2>{section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}</section>)}
           <aside class="article-callout"><h2>把你家的情况，具体聊一聊。</h2><p>本文为装修沟通参考。实际施工方案、费用和售后约定，应结合房屋情况与正式合同确认。</p><a class="button button-primary" href={company.tel}>拨打 {company.phone}<span aria-hidden="true">↗</span></a></aside>
         </div>
         <nav class="article-sidebar" aria-label="文章目录"><p>这篇文章聊什么</p>{guide.sections.map((section, index) => <a href={`#point-${index + 1}`}>{section.heading}</a>)}</nav>
       </div>
       <aside class="article-related"><h2>也许你还想了解</h2>{guides.filter((other) => other.slug !== guide.slug).map((other) => <a href={`/guides/${other.slug}/`}>{other.title}<span aria-hidden="true">↗</span></a>)}</aside>
+      <aside class="article-related"><h2>相关装修服务</h2>{services.filter((service) => guide.relatedServiceIds.includes(service.id)).map((service) => <a href={`/services/${service.id}/`}>{service.title}<span aria-hidden="true">↗</span></a>)}</aside>
     </article>
   </main>
 </Layout>

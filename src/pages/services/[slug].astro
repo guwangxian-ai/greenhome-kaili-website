@@ -1,0 +1,53 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { company, guides, services } from '../../data/company';
+import { serviceDetails, type ServiceDetail } from '../../data/service-details';
+import { organizationId, siteUrl } from '../../lib/seo';
+export function getStaticPaths() {
+  return serviceDetails.map((detail) => ({ params: { slug: detail.id }, props: { detail } }));
+}
+interface Props { detail: ServiceDetail }
+const { detail } = Astro.props;
+const service = services.find((item) => item.id === detail.id)!;
+const breadcrumbs = [
+  { name: '首页', path: '/' }, { name: '装修服务', path: '/services/' },
+  { name: service.title, path: `/services/${service.id}/` },
+];
+const serviceSchema = {
+  '@type': 'Service', '@id': `${siteUrl(Astro.url.pathname, Astro.site)}#service`,
+  name: `凯里${service.title}`, serviceType: service.title,
+  description: detail.intro, url: siteUrl(Astro.url.pathname, Astro.site),
+  provider: { '@id': organizationId(Astro.site) },
+  areaServed: company.serviceArea.map((name) => ({ '@type': 'Place', name })),
+  mainEntityOfPage: { '@id': `${siteUrl(Astro.url.pathname, Astro.site)}#webpage` },
+};
+const relatedGuides = guides.filter((guide) => detail.relatedGuideSlugs.includes(guide.slug));
+---
+<Layout title={`凯里${service.title}｜服务范围与咨询准备｜${company.fullName}`} description={detail.intro} breadcrumbs={breadcrumbs} schema={serviceSchema}>
+  <main id="main-content" class="site-main">
+    <article class="article-shell service-detail">
+      <Breadcrumbs items={breadcrumbs} />
+      <header class="article-header">
+        <p class="article-category">{company.fullName} · 凯里及黔东南</p>
+        <h1>凯里{service.title}</h1>
+        <p class="article-lead">{detail.intro}</p>
+        <div class="detail-actions"><a class="button button-primary" href="/contact/">聊聊我家的{service.title}<span aria-hidden="true">↗</span></a><a class="text-link" href="/services/">查看其他服务<span aria-hidden="true">→</span></a></div>
+      </header>
+      <div class="article-layout">
+        <div class="article-prose">
+          {detail.sections.map((section, index) => <section id={`point-${index + 1}`}><h2>{section.heading}</h2>{section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}</section>)}
+          <section id="preparation"><h2>咨询前，可以先准备这些</h2><ul>{detail.preparation.map((item) => <li>{item}</li>)}</ul></section>
+          <section id="questions"><h2>关于{service.title}，你可能还想问</h2><div class="faq-list">{detail.faq.map((item) => <details><summary>{item.question}<span aria-hidden="true">＋</span></summary><p>{item.answer}</p></details>)}</div></section>
+          <aside class="article-callout"><h2>把房屋情况说清楚，方案才具体。</h2><p>服务凯里及黔东南家庭。周边县市、乡镇项目需结合位置、施工内容和现场管理条件确认。价格、工期、材料配置与售后以具体方案及正式合同为准。</p><a class="button button-primary" href={company.tel}>拨打 {company.phone}<span aria-hidden="true">↗</span></a></aside>
+        </div>
+        <nav class="article-sidebar" aria-label={`${service.title}页面目录`}>
+          <p>这项服务聊什么</p>
+          {detail.sections.map((section, index) => <a href={`#point-${index + 1}`}>{section.heading}</a>)}
+          <a href="#preparation">咨询准备</a><a href="#questions">常见问题</a><a href="/contact/">电话与地址</a>
+        </nav>
+      </div>
+      <aside class="article-related"><h2>做决定之前，读一读</h2>{relatedGuides.map((guide) => <a href={`/guides/${guide.slug}/`}>{guide.title}<span aria-hidden="true">↗</span></a>)}</aside>
+    </article>
+  </main>
+</Layout>

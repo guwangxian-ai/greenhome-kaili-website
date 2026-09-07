@@ -1,10 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { company } from '../data/company';
+const breadcrumbs = [{ name: '首页', path: '/' }, { name: '隐私说明', path: '/privacy/' }];
 ---
-<Layout title="隐私说明｜凯里绿色家装饰" description="了解凯里绿色家装饰官网的装修需求整理、联系方式和网站隐私说明。">
+<Layout title="隐私说明｜凯里绿色家装饰" description="了解凯里绿色家装饰官网的装修需求整理、联系方式和网站隐私说明。" breadcrumbs={breadcrumbs}>
   <main id="main-content" class="privacy-content">
-    <div class="breadcrumb"><a href="/">首页</a><span>/</span><span>隐私说明</span></div>
+    <Breadcrumbs items={breadcrumbs} />
     <h1>把信息的去向，说清楚。</h1>
     <p>本网站由{company.fullName}用于介绍住宅装修服务及发布装修知识。以下说明适用于当前官网功能。</p>
     <h2>装修需求清单</h2>

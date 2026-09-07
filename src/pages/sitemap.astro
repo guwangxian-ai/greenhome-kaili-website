@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { guides, services } from '../data/company';
+const breadcrumbs = [{ name: '首页', path: '/' }, { name: '网站地图', path: '/sitemap/' }];
+---
+<Layout title="网站地图｜装修服务与指南导航｜凯里绿色家装饰" description="浏览凯里绿色家装饰官网的公司介绍、联系方式、四项住宅装修服务和装修指南，快速找到需要的信息。" pageType="CollectionPage" breadcrumbs={breadcrumbs}>
+  <main id="main-content" class="article-shell">
+    <Breadcrumbs items={breadcrumbs} />
+    <header class="article-header"><h1>网站地图</h1><p class="article-lead">从这里，找到你需要的服务与装修信息。</p></header>
+    <div class="sitemap-sections article-prose">
+      <section><h2>认识公司</h2><ul><li><a href="/">公司首页</a></li><li><a href="/about/">公司介绍</a></li><li><a href="/contact/">联系电话与地址</a></li><li><a href="/#inspiration">空间灵感</a></li><li><a href="/privacy/">隐私说明</a></li></ul></section>
+      <section><h2><a href="/services/">装修服务</a></h2><ul>{services.map((service) => <li><a href={`/services/${service.id}/`}>{service.title}</a></li>)}</ul></section>
+      <section><h2><a href="/guides/">装修指南</a></h2><ul>{guides.map((guide) => <li><a href={`/guides/${guide.slug}/`}>{guide.title}</a></li>)}</ul></section>
+    </div>
+  </main>
+</Layout>

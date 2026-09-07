@@ -230,9 +230,9 @@ export default function Home() {
             <span>住成喜欢的样子。</span>
           </h1>
           <p className="hero-description hero-enter">
-            从一张户型图，到一家人的好生活。
+            凯里绿色家装饰，服务凯里及黔东南家庭。
             <br />
-            凯里绿色家装饰，陪你把关于家的想法慢慢落地。
+            新房装修、旧房翻新、局部改造与住宅设计。
           </p>
           <div className="hero-actions hero-enter">
             <button
@@ -324,10 +324,10 @@ export default function Home() {
           </p>
         </div>
         <div className="services-bento">
-          <button
+          <a
             className="service-card service-card-large"
-            onClick={() => openBrief("新房装修")}
-            aria-label="了解新房装修并整理我的需求"
+            href="/services/new-home/"
+            aria-label="了解新房装修服务"
           >
             <img
               src="/images/living.webp"
@@ -348,10 +348,10 @@ export default function Home() {
               <ArrowUpRightIcon size={26} />
             </span>
             <span className="photo-reference">空间灵感</span>
-          </button>
-          <button
+          </a>
+          <a
             className="service-card service-card-renovation"
-            onClick={() => openBrief("旧房翻新")}
+            href="/services/renovation/"
           >
             <span className="service-card-content">
               <span className="service-small-title">留住熟悉，换来舒适</span>
@@ -368,10 +368,10 @@ export default function Home() {
               <i />
               <i />
             </span>
-          </button>
-          <button
+          </a>
+          <a
             className="service-card service-card-partial"
-            onClick={() => openBrief("局部改造")}
+            href="/services/partial/"
           >
             <span className="service-card-content">
               <span className="service-small-title">让日常，再顺手一点</span>
@@ -391,12 +391,12 @@ export default function Home() {
               loading="lazy"
               alt="家居材质细节示意"
             />
-          </button>
+          </a>
         </div>
         <div className="service-note">
-          <span>也可先从设计和材料选配聊起，具体服务范围以项目沟通为准。</span>
-          <a href="#contact" className="text-link">
-            了解适合我的服务
+          <span>也可先了解<a href="/services/design/">住宅设计</a>，从布局和材料选配聊起。</span>
+          <a href="/services/" className="text-link">
+            查看全部装修服务
             <ArrowRightIcon size={18} aria-hidden="true" />
           </a>
         </div>
@@ -449,8 +449,8 @@ export default function Home() {
             <br className="desktop-break" />
             我们关注环保与品质，也关心你回家后的每一个平常日子。
           </p>
-          <a className="text-link" href="#process">
-            认识我们的服务思路
+          <a className="text-link" href="/about/">
+            了解凯里绿色家装饰
             <ArrowDownIcon size={18} aria-hidden="true" />
           </a>
         </div>
@@ -592,7 +592,7 @@ export default function Home() {
           </a>
         </div>
         <div className="guide-grid">
-          {guides.map((guide, index) => (
+          {guides.map((guide) => (
             <a
               className="guide-card"
               href={`/guides/${guide.slug}/`}
@@ -600,13 +600,7 @@ export default function Home() {
             >
               <div className="guide-image">
                 <img
-                  src={
-                    [
-                      "/images/detail.webp",
-                      "/images/living.webp",
-                      "/images/kitchen.webp",
-                    ][index]
-                  }
+                  src={guide.image}
                   width="1000"
                   height="700"
                   loading="lazy"

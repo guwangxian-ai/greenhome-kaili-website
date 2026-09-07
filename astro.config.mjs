@@ -9,6 +9,9 @@ try {
   if (error.code !== "ENOENT") throw error;
 }
 const configuredSite = process.env.SITE_URL?.trim();
+if (!configuredSite && process.argv.includes('build')) {
+  console.warn('[SEO] 未配置 SITE_URL：本次保留本地相对网址，不生成 canonical 和 XML sitemap。正式构建请使用部署环境中的 HTTPS 域名。');
+}
 if (configuredSite) {
   const parsed = new URL(configuredSite);
   if (parsed.protocol !== "https:")
@@ -28,6 +31,8 @@ export default defineConfig({
   output: "static",
   trailingSlash: "always",
   devToolbar: { enabled: false },
-  integrations: [react(), ...(configuredSite ? [sitemap()] : [])],
+  integrations: [react(), ...(configuredSite ? [sitemap({
+    filter: (page) => !/^\/404(?:\.html|\/)?$/.test(new URL(page).pathname),
+  })] : [])],
   server: { port: 4321, host: "127.0.0.1" },
 });

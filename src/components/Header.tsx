@@ -4,14 +4,15 @@ import { ArrowUpRightIcon, ListIcon, XIcon } from "@phosphor-icons/react";
 import { company } from "../data/company";
 
 const links = [
-  ["装修服务", "/#services"],
+  ["装修服务", "/services/"],
   ["空间灵感", "/#inspiration"],
-  ["走近我们", "/#approach"],
+  ["走近我们", "/about/"],
   ["装修指南", "/guides/"],
 ];
 
-export default function Header() {
+export default function Header({ currentPath = '/' }: { currentPath?: string }) {
   const [open, setOpen] = useState(false);
+  const active = (href: string) => !href.includes('#') && currentPath.startsWith(href);
   useEffect(() => {
     const handleKey = (event: KeyboardEvent) =>
       event.key === "Escape" && setOpen(false);
@@ -38,14 +39,14 @@ export default function Header() {
         </a>
         <nav aria-label="主导航" className="desktop-nav">
           {links.map(([label, href]) => (
-            <a key={href} href={href}>
+            <a key={href} href={href} aria-current={active(href) ? 'page' : undefined}>
               {label}
             </a>
           ))}
         </nav>
         <a
           className="header-contact"
-          href="/#contact"
+          href="/contact/"
           onClick={() => setOpen(false)}
         >
           聊聊你的家 <ArrowUpRightIcon size={17} aria-hidden="true" />
@@ -68,12 +69,12 @@ export default function Header() {
         hidden={!open}
       >
         {links.map(([label, href]) => (
-          <a key={href} href={href} onClick={() => setOpen(false)}>
+          <a key={href} href={href} aria-current={active(href) ? 'page' : undefined} onClick={() => setOpen(false)}>
             {label}
             <ArrowUpRightIcon size={19} aria-hidden="true" />
           </a>
         ))}
-        <a href="/#contact" onClick={() => setOpen(false)}>
+        <a href="/contact/" onClick={() => setOpen(false)}>
           联系我们
           <ArrowUpRightIcon size={19} aria-hidden="true" />
         </a>

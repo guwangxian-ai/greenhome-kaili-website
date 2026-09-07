@@ -18,6 +18,7 @@ npm run dev
 ```bash
 npm run check
 npm run build
+npm run test:seo
 npm run preview
 ```
 
@@ -27,7 +28,7 @@ Astro 7 的开发服务默认在后台运行，使用 `npx astro dev stop` 停�
 
 ## 内容与功能边界
 
-- 页面包含公司首页、三篇装修指南、隐私说明与 404 页面。
+- 页面包含公司首页、装修服务列表、四项服务详情、公司介绍、联系页、三篇装修指南与指南列表、HTML 网站地图、隐私说明及 404 页面。
 - 电话咨询使用 `19885332380`，移动设备可调用拨号功能。
 - 需求整理弹窗只在当前页面编辑、整理并复制需求，不向公司或其他服务提交信息，也没有后台收件接口。
 - 公司介绍与业务范围应以确认的企业信息维护。图片应保留其素材来源与示意属性，不把示意图片表述为公司的已交付案例。
@@ -36,6 +37,21 @@ Astro 7 的开发服务默认在后台运行，使用 `npx astro dev stop` 停�
 正式域名确定后，从 `.env.example` 创建本地 `.env`，填写 `SITE_URL`。Cloudflare Git 构建时在构建环境变量中填写同名变量。
 
 `SITE_URL` 是站点完整 HTTPS 基础地址，需填写实际拥有并用于部署的域名。留空时不生成 canonical 与 sitemap；设置后重新构建才会生效。请勿为通过构建而填写虚构域名。静态 HTML 与结构化内容方便读取，但不代表搜索引擎或 AI 一定收录、引用或推荐。
+
+## SEO 与内容维护
+
+- 复用 `@astrojs/sitemap` 生成 XML sitemap，并在 `robots.txt` 与页面 head 中提供入口；404 不列入 sitemap，也不输出 canonical。`/sitemap/` 是可直接浏览的 HTML 网站地图，在未配置域名的本地环境同样可用。
+- 企业名称、地址、电话由 `src/data/company.ts` 统一维护。`src/lib/seo.ts` 和 `Layout.astro` 将企业、网站、页面、面包屑、文章与服务关联到稳定的 JSON-LD 标识。未知的营业时间、资质、评价、服务承诺与官方账号链接不编造。
+- 四项服务的正文和问答维护在 `src/data/service-details.ts`；首页服务卡片、主导航、文章与相关服务使用普通 HTML 链接，正文直接输出到静态页面。
+- 指南署名链接到公司介绍，发布日期依据 2026-09-04 首次公开提交记录。只在实际编辑内容时记录更新日期，不在每次部署时刷新日期。
+- `llms.txt` 提供与页面一致的公开信息和链接索引，不将其作为 AI 推荐保证。未来发布真实案例时，应具备可公开的图片、项目事实和必要授权，继续区分方案效果图与完工实景。
+- 正式域名由部署构建环境中的 `SITE_URL` 读取。缺失时构建会明确提示，但不会用预览地址或虚构域名替代正式域名。托管绑定域名不会自动写入 Astro 的构建配置。
+
+`npm run test:seo` 使用 Node.js 测试运行器和仅用于开发验证的 `parse5`（MIT），检查已构建 HTML 的标题、正文、内部链接、锚点、图片、页面可达性和结构化数据。生产域名检查会核对 canonical、分享地址、robots 与 sitemap 是否一致。未配置域名的本地构建会明确跳过这一组检查。
+
+可通过 `SEO_DIST_DIR` 指定独立的测试构建目录，通过 `SEO_SITE_URL` 指定该目录应使用的测试域名。验证产物不要部署或提交；正式产物始终使用实际的 `SITE_URL`。新增页面后运行类型检查、构建和 SEO 测试，并检查桌面及手机导航。
+
+官方参考：[Astro sitemap](https://docs.astro.build/en/guides/integrations-guide/sitemap/)、[Google AI 搜索与 SEO](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide)、[Bing Webmaster Guidelines](https://www.bing.com/webmasters/help/webmaster-guidelines-30fba23a)。
 
 ## Cloudflare 本地验证
 

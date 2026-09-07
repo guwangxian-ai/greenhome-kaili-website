@@ -2,6 +2,7 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer.astro';
 import { company } from '../data/company';
+import { businessSchema, organizationId, serializeSchema, siteUrl, type BreadcrumbItem } from '../lib/seo';
 import '../styles/global.css';
 
 interface Props {
@@ -9,6 +10,11 @@ interface Props {
   description?: string;
   schema?: Record<string, unknown> | Record<string, unknown>[];
   noindex?: boolean;
+  breadcrumbs?: BreadcrumbItem[];
+  pageType?: 'WebPage' | 'AboutPage' | 'ContactPage' | 'CollectionPage';
+  image?: string;
+  imageAlt?: string;
+  articlePublishedAt?: string;
 }
 
 const {
@@ -16,25 +22,42 @@ const {
   description = company.description,
   schema,
   noindex = false,
+  breadcrumbs = [],
+  pageType = 'WebPage',
+  image = '/images/hero.webp',
+  imageAlt = '凯里绿色家装饰住宅空间灵感，非公司交付案例',
+  articlePublishedAt,
 } = Astro.props;
-const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
-const shareImage = Astro.site ? new URL('/images/hero.webp', Astro.site).href : undefined;
-const organization = {
+const pageUrl = siteUrl(Astro.url.pathname, Astro.site);
+const canonical = Astro.site && !noindex ? pageUrl : undefined;
+const shareImage = siteUrl(image, Astro.site);
+const websiteId = siteUrl('/#website', Astro.site);
+const breadcrumbId = `${pageUrl}#breadcrumb`;
+const structuredData = {
   '@context': 'https://schema.org',
-  '@type': 'HomeAndConstructionBusiness',
-  name: company.fullName,
-  alternateName: company.shortName,
-  description: company.description,
-  telephone: '+86-19885332380',
-  foundingDate: company.foundingDate,
-  ...(Astro.site ? { url: Astro.site.href } : {}),
-  address: {
-    '@type': 'PostalAddress', addressCountry: 'CN', addressRegion: '贵州省黔东南苗族侗族自治州',
-    addressLocality: '凯里市', streetAddress: '城西街道迎宾大道77号隆源公馆商铺11-2-202',
-  },
-  areaServed: company.serviceArea.map((name) => ({ '@type': 'Place', name })),
+  '@graph': [
+    businessSchema(Astro.site),
+    {
+      '@type': 'WebSite', '@id': websiteId,
+      url: siteUrl('/', Astro.site), name: company.fullName, inLanguage: 'zh-CN',
+      publisher: { '@id': organizationId(Astro.site) },
+    },
+    {
+      '@type': pageType, '@id': `${pageUrl}#webpage`, url: pageUrl,
+      name: title, description, inLanguage: 'zh-CN',
+      isPartOf: { '@id': websiteId }, about: { '@id': organizationId(Astro.site) },
+      ...(breadcrumbs.length > 1 ? { breadcrumb: { '@id': breadcrumbId } } : {}),
+    },
+    ...(breadcrumbs.length > 1 ? [{
+      '@type': 'BreadcrumbList', '@id': breadcrumbId,
+      itemListElement: breadcrumbs.map((item, index) => ({
+        '@type': 'ListItem', position: index + 1,
+        name: item.name, item: siteUrl(item.path, Astro.site),
+      })),
+    }] : []),
+    ...(schema ? (Array.isArray(schema) ? schema : [schema]) : []),
+  ],
 };
-const schemas = [organization, ...(schema ? (Array.isArray(schema) ? schema : [schema]) : [])];
 ---
 <!doctype html>
 <html lang="zh-CN">
@@ -47,20 +70,27 @@ const schemas = [organization, ...(schema ? (Array.isArray(schema) ? schema : [s
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
     <meta name="generator" content={Astro.generator} />
     {canonical && <link rel="canonical" href={canonical} />}
+    {Astro.site && <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />}
     <link rel="icon" href="/favicon.png" type="image/png" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={articlePublishedAt ? 'article' : 'website'} />
     <meta property="og:locale" content="zh_CN" />
     <meta property="og:site_name" content={company.shortName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     {canonical && <meta property="og:url" content={canonical} />}
-    {shareImage && <meta property="og:image" content={shareImage} />}
+    <meta property="og:image" content={shareImage} />
+    <meta property="og:image:alt" content={imageAlt} />
+    {articlePublishedAt && <meta property="article:published_time" content={articlePublishedAt} />}
     <meta name="twitter:card" content="summary_large_image" />
-    {schemas.map((entry) => <script is:inline type="application/ld+json" set:html={JSON.stringify(entry).replace(/</g, '\\u003c')} />)}
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={shareImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+    <script is:inline type="application/ld+json" set:html={serializeSchema(structuredData)} />
   </head>
   <body>
     <a class="skip-link" href="#main-content">跳到主要内容</a>
-    <Header client:load />
+    <Header client:load currentPath={Astro.url.pathname} />
     <slot />
     <Footer />
   </body>

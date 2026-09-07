@@ -1,0 +1,39 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { company, services } from '../../data/company';
+import { siteUrl } from '../../lib/seo';
+const breadcrumbs = [{ name: '首页', path: '/' }, { name: '装修服务', path: '/services/' }];
+const serviceList = {
+  '@type': 'ItemList', name: '凯里绿色家装饰装修服务',
+  itemListElement: services.map((service, index) => ({
+    '@type': 'ListItem', position: index + 1, name: service.title,
+    url: siteUrl(`/services/${service.id}/`, Astro.site),
+  })),
+};
+---
+<Layout title="凯里装修服务｜新房装修、旧房翻新、局部改造与住宅设计｜凯里绿色家装饰" description="了解凯里绿色家装饰的新房装修、旧房翻新、局部改造与住宅设计服务，查看服务范围、预算沟通重点和咨询准备资料。服务凯里及黔东南家庭。" pageType="CollectionPage" breadcrumbs={breadcrumbs} schema={serviceList}>
+  <main id="main-content" class="site-main">
+    <header class="page-intro container">
+      <Breadcrumbs items={breadcrumbs} />
+      <p class="section-kicker">立足凯里，服务黔东南</p>
+      <h1>从你家的需要，<br />找到合适的装修服务。</h1>
+      <p>{company.fullName}提供新房装修、旧房翻新、局部改造与住宅设计服务。先了解每项服务的范围和沟通重点，再结合房屋现状、预算与入住计划确定方案。</p>
+    </header>
+    <div class="service-directory container">
+      {services.map((service, index) => <article class="service-directory-item">
+        <span class="directory-number" aria-hidden="true">0{index + 1}</span>
+        <div>
+          <h2><a href={`/services/${service.id}/`}>{service.title}<span aria-hidden="true">↗</span></a></h2>
+          <p>{service.description}</p>
+          <ul>{service.benefits.map((benefit) => <li>{benefit}</li>)}</ul>
+          <a class="text-link" href={`/services/${service.id}/`}>了解{service.title}的范围与准备事项<span aria-hidden="true">→</span></a>
+        </div>
+      </article>)}
+    </div>
+    <aside class="directory-contact container">
+      <div><h2>还没确定从哪里开始？</h2><p>带上户型图和想改善的问题，先把房屋情况聊清楚。</p></div>
+      <a class="button button-primary" href="/contact/">联系装修咨询<span aria-hidden="true">↗</span></a>
+    </aside>
+  </main>
+</Layout>

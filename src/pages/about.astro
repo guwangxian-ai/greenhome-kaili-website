@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { company, services } from '../data/company';
+const breadcrumbs = [{ name: '首页', path: '/' }, { name: '走近我们', path: '/about/' }];
+---
+<Layout title="公司介绍｜立足凯里、服务黔东南家庭｜凯里绿色家装饰" description="认识凯里绿色家装饰，了解公司所在地、住宅装修业务、服务区域，以及设计、材料、施工和验收的沟通思路。" pageType="AboutPage" breadcrumbs={breadcrumbs}>
+  <main id="main-content" class="site-main">
+    <article class="article-shell">
+      <Breadcrumbs items={breadcrumbs} />
+      <header class="article-header"><p class="article-category">走近我们</p><h1>{company.fullName}</h1><p class="article-lead">我们立足凯里，面向黔东南家庭提供住宅设计、新房装修、旧房翻新与局部改造服务。从户型、预算和生活习惯出发，把关于家的想法落实到设计、选材、施工与工程管理中。</p></header>
+      <dl class="company-facts">
+        <div><dt>公司名称</dt><dd>{company.fullName}</dd></div>
+        <div><dt>成立日期</dt><dd><time datetime={company.foundingDate}>2023年2月1日</time></dd></div>
+        <div><dt>联系电话</dt><dd><a href={company.tel}>{company.phone}</a></dd></div>
+        <div><dt>服务区域</dt><dd>凯里及黔东南，具体项目承接范围需沟通确认</dd></div>
+        <div class="facts-wide"><dt>公司地址</dt><dd>{company.address}</dd></div>
+      </dl>
+      <div class="article-layout"><div class="article-prose">
+        <section id="services"><h2>围绕住宅装修，提供适合的服务</h2><p>新房装修关注布局、材料和预算的整体安排；旧房翻新先评估原有房屋状况，再确定保留、维修与更换范围。厨房、卫生间等局部需求，则需要重点考虑与原有空间的衔接。</p><ul>{services.map((service) => <li><a href={`/services/${service.id}/`}>{service.title}：{service.shortDescription}</a></li>)}</ul></section>
+        <section id="approach"><h2>把居住需求与施工细节一起考虑</h2><p>我们关注材料选择、施工规范和空间的实用性。装修前，先沟通常住人口、生活动线、收纳需求、预算与入住计划，再讨论设计风格和材料搭配。</p><p>讨论方案时，把工程范围、材料型号、费用包含项与变更处理方式说清楚。进入施工阶段后，围绕材料进场、隐蔽工程、节点验收和完工交付保留必要记录，让每一项选择都有具体依据。</p></section>
+        <section id="area"><h2>本地服务，从具体房屋情况开始</h2><p>公司位于凯里市迎宾大道77号隆源公馆，主要服务凯里及黔东南家庭。周边县市、乡镇项目需要结合交通位置、施工内容与现场管理条件确认。人在外地的业主，也可以先电话沟通凯里的房屋情况。</p></section>
+        <aside class="article-callout"><h2>认识一家装修公司，从一次具体的交流开始。</h2><p>可以带上户型图、现场照片，以及最想解决的居住问题。到访前建议先电话联系，确认沟通安排。</p><a class="button button-primary" href="/contact/">查看电话与地址<span aria-hidden="true">↗</span></a></aside>
+      </div><nav class="article-sidebar" aria-label="公司介绍目录"><p>了解凯里绿色家装饰</p><a href="#services">业务与服务</a><a href="#approach">我们的沟通思路</a><a href="#area">服务区域</a><a href="/contact/">联系公司</a></nav></div>
+    </article>
+  </main>
+</Layout>

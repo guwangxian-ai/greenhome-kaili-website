@@ -7,12 +7,12 @@ import { company } from '../data/company';
       <span class="footer-brand-title"><span class="footer-brand-mark company-logo-mask" aria-hidden="true"></span>{company.displayName}</span>
       <span class="footer-brand-tagline">让生活，回到喜欢的样子。</span>
     </a>
-    <div class="footer-links"><a href="/#services">装修服务</a><a href="/#inspiration">空间灵感</a><a href="/guides/">装修指南</a><a href="/#contact">联系我们</a></div>
+    <nav class="footer-links" aria-label="页脚导航"><a href="/services/">装修服务</a><a href="/about/">走近我们</a><a href="/guides/">装修指南</a><a href="/contact/">联系我们</a></nav>
     <a class="footer-phone" href={company.tel}>{company.phone}<span>凯里及黔东南住宅装修咨询</span></a>
   </div>
   <div class="footer-bottom container">
     <span>© {new Date().getFullYear()} {company.fullName}</span>
     <span>空间图片为灵感参考，非公司交付案例。</span>
-    <a href="/privacy/">隐私说明</a>
+    <span class="footer-legal"><a href="/sitemap/">网站地图</a><a href="/privacy/">隐私说明</a></span>
   </div>
 </footer>

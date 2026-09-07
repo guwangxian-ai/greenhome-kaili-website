@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { company } from '../data/company';
+const breadcrumbs = [{ name: '首页', path: '/' }, { name: '联系我们', path: '/contact/' }];
+---
+<Layout title={`联系我们｜装修咨询电话 ${company.phone}｜凯里绿色家装饰`} description={`凯里绿色家装饰装修咨询电话 ${company.phone}，地址位于凯里市迎宾大道77号隆源公馆商铺11-2-202。了解服务区域、到访联系与首次咨询所需资料。`} pageType="ContactPage" breadcrumbs={breadcrumbs}>
+  <main id="main-content" class="site-main">
+    <article class="article-shell">
+      <Breadcrumbs items={breadcrumbs} />
+      <header class="article-header"><p class="article-category">联系{company.fullName}</p><h1>把你家的情况，<br />具体聊一聊。</h1><p class="article-lead">无论是新房装修、旧房翻新，还是厨房、卫生间等局部改造，都可以先从房屋现状和生活需求开始沟通。</p></header>
+      <div class="contact-page-grid">
+        <section class="contact-page-details" aria-labelledby="contact-details-title"><h2 id="contact-details-title">电话与地址</h2><p>装修咨询电话</p><a class="contact-page-phone" href={company.tel}>{company.phone}</a><address><strong>{company.fullName}</strong><span>{company.address}</span></address><p>到访前建议先电话联系，确认地址与沟通安排。点击电话号码可使用设备的拨号功能。</p></section>
+        <div class="article-prose">
+          <section><h2>第一次咨询，准备这些就能开始</h2><ul><li>房屋所在小区或位置、面积与户型图。</li><li>毛坯、已入住旧房或局部改造的现状照片。</li><li>常住人口，以及采光、动线、收纳等最想解决的问题。</li><li>预算考虑、计划入住时间与准备保留的家具电器。</li></ul></section>
+          <section><h2>哪些地方可以沟通装修？</h2><p>主要面向凯里及黔东南家庭。周边县市、乡镇项目需结合位置、工程范围与现场管理条件确认。人在外地，也可以先电话说明凯里的房屋情况，再约定后续沟通方式。</p></section>
+          <section><h2>咨询后如何确定方案与费用？</h2><p>房屋面积只能用于初步沟通。需要结合现场情况，确认设计、拆改、水电、材料及安装范围，再核对项目清单。价格、工期和售后约定以具体方案及正式合同为准。</p><a class="text-link" href="/services/">先了解各项装修服务<span aria-hidden="true">→</span></a></section>
+        </div>
+      </div>
+    </article>
+  </main>
+</Layout>
