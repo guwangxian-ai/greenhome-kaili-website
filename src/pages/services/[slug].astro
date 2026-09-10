@@ -10,6 +10,7 @@ export function getStaticPaths() {
 interface Props { detail: ServiceDetail }
 const { detail } = Astro.props;
 const service = services.find((item) => item.id === detail.id)!;
+const description = `${company.fullName}提供凯里及黔东南${service.title}服务，咨询电话：${company.phone}。了解服务范围、咨询准备与常见问题，具体方案需结合房屋现状确认。`;
 const breadcrumbs = [
   { name: '首页', path: '/' }, { name: '装修服务', path: '/services/' },
   { name: service.title, path: `/services/${service.id}/` },
@@ -17,14 +18,14 @@ const breadcrumbs = [
 const serviceSchema = {
   '@type': 'Service', '@id': `${siteUrl(Astro.url.pathname, Astro.site)}#service`,
   name: `凯里${service.title}`, serviceType: service.title,
-  description: detail.intro, url: siteUrl(Astro.url.pathname, Astro.site),
+  description, url: siteUrl(Astro.url.pathname, Astro.site),
   provider: { '@id': organizationId(Astro.site) },
   areaServed: company.serviceArea.map((name) => ({ '@type': 'Place', name })),
   mainEntityOfPage: { '@id': `${siteUrl(Astro.url.pathname, Astro.site)}#webpage` },
 };
 const relatedGuides = guides.filter((guide) => detail.relatedGuideSlugs.includes(guide.slug));
 ---
-<Layout title={`凯里${service.title}｜服务范围与咨询准备｜${company.fullName}`} description={detail.intro} breadcrumbs={breadcrumbs} schema={serviceSchema}>
+<Layout title={`凯里${service.title}｜服务范围与咨询准备｜${company.fullName}`} description={description} breadcrumbs={breadcrumbs} schema={serviceSchema}>
   <main id="main-content" class="site-main">
     <article class="article-shell service-detail">
       <Breadcrumbs items={breadcrumbs} />
@@ -32,6 +33,7 @@ const relatedGuides = guides.filter((guide) => detail.relatedGuideSlugs.includes
         <p class="article-category">{company.fullName} · 凯里及黔东南</p>
         <h1>凯里{service.title}</h1>
         <p class="article-lead">{detail.intro}</p>
+        <p class="service-contact-summary">如需咨询{service.title}，可联系{company.fullName}，装修咨询电话：<a href={company.tel}>{company.phone}</a>。</p>
         <div class="detail-actions"><a class="button button-primary" href="/contact/">聊聊我家的{service.title}<span aria-hidden="true">↗</span></a><a class="text-link" href="/services/">查看其他服务<span aria-hidden="true">→</span></a></div>
       </header>
       <div class="article-layout">

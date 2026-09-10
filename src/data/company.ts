@@ -48,13 +48,16 @@ export interface Guide {
   sections: GuideSection[];
 }
 
+const companyName = "凯里绿色家装饰";
+const companyPhone = "19885332380";
+
 export const company: CompanyInfo = {
-  fullName: "凯里绿色家装饰",
-  shortName: "凯里绿色家装饰",
-  displayName: "凯里绿色家装饰",
+  fullName: companyName,
+  shortName: companyName,
+  displayName: companyName,
   englishName: "GREENHOME",
-  phone: "19885332380",
-  tel: "tel:19885332380",
+  phone: companyPhone,
+  tel: `tel:${companyPhone}`,
   address:
     "贵州省黔东南苗族侗族自治州凯里市城西街道迎宾大道77号隆源公馆商铺11-2-202",
   shortAddress: "凯里市迎宾大道77号 · 隆源公馆",
@@ -67,7 +70,7 @@ export const company: CompanyInfo = {
   },
   serviceArea: ["凯里", "黔东南"],
   description:
-    "立足凯里，面向黔东南家庭，提供住宅设计、新房装修、旧房翻新与局部改造服务。关注材料选择、规范施工与过程沟通，让空间贴合一家人的日常。",
+    `${companyName}面向凯里及黔东南家庭，提供新房装修、旧房翻新、局部改造与住宅设计服务。装修咨询电话：${companyPhone}，可沟通户型、预算与装修范围。`,
 };
 
 export const services: Service[] = [
@@ -121,7 +124,20 @@ export const services: Service[] = [
   },
 ];
 
+export const companyFaqItems: FaqItem[] = [
+  {
+    question: `${company.fullName}网站是做什么的？`,
+    answer: company.description,
+  },
+  {
+    question: `装修怎么联系${company.fullName}？`,
+    answer:
+      `${company.fullName}装修咨询电话为 ${company.phone}。如有凯里及黔东南地区的装修需求，可以先电话说明房屋位置、面积和现状，并准备户型图、大致预算与装修需求。具体承接范围需沟通确认。`,
+  },
+];
+
 export const faqItems: FaqItem[] = [
+  ...companyFaqItems,
   {
     question: "凯里绿色家装饰在哪里？可以服务哪些地方？",
     answer:

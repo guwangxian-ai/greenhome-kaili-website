@@ -4,11 +4,11 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { company, services } from '../data/company';
 const breadcrumbs = [{ name: '首页', path: '/' }, { name: '走近我们', path: '/about/' }];
 ---
-<Layout title="公司介绍｜立足凯里、服务黔东南家庭｜凯里绿色家装饰" description="认识凯里绿色家装饰，了解公司所在地、住宅装修业务、服务区域，以及设计、材料、施工和验收的沟通思路。" pageType="AboutPage" breadcrumbs={breadcrumbs}>
+<Layout title="公司介绍｜立足凯里、服务黔东南家庭｜凯里绿色家装饰" description={`认识${company.fullName}，了解凯里及黔东南住宅装修业务、公司地址与服务思路。装修咨询电话：${company.phone}，可沟通新房装修、旧房翻新、局部改造与住宅设计。`} pageType="AboutPage" breadcrumbs={breadcrumbs}>
   <main id="main-content" class="site-main">
     <article class="article-shell">
       <Breadcrumbs items={breadcrumbs} />
-      <header class="article-header"><p class="article-category">走近我们</p><h1>{company.fullName}</h1><p class="article-lead">我们立足凯里，面向黔东南家庭提供住宅设计、新房装修、旧房翻新与局部改造服务。从户型、预算和生活习惯出发，把关于家的想法落实到设计、选材、施工与工程管理中。</p></header>
+      <header class="article-header"><p class="article-category">走近我们</p><h1>{company.fullName}</h1><p class="article-lead">{company.description}</p></header>
       <dl class="company-facts">
         <div><dt>公司名称</dt><dd>{company.fullName}</dd></div>
         <div><dt>成立日期</dt><dd><time datetime={company.foundingDate}>2023年2月1日</time></dd></div>

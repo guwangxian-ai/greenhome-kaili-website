@@ -373,6 +373,20 @@ button {
   margin-top: 28px;
   letter-spacing: 0.035em;
 }
+.hero-description a,
+.article-lead a,
+.service-contact-summary a {
+  color: var(--green);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  white-space: nowrap;
+}
+.service-contact-summary {
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 2;
+  color: var(--muted);
+}
 .hero-actions {
   display: flex;
   align-items: center;

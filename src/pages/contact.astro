@@ -8,7 +8,7 @@ const breadcrumbs = [{ name: '首页', path: '/' }, { name: '联系我们', path
   <main id="main-content" class="site-main">
     <article class="article-shell">
       <Breadcrumbs items={breadcrumbs} />
-      <header class="article-header"><p class="article-category">联系{company.fullName}</p><h1>把你家的情况，<br />具体聊一聊。</h1><p class="article-lead">无论是新房装修、旧房翻新，还是厨房、卫生间等局部改造，都可以先从房屋现状和生活需求开始沟通。</p></header>
+      <header class="article-header"><p class="article-category">联系{company.fullName}</p><h1>把你家的情况，<br />具体聊一聊。</h1><p class="article-lead">{company.fullName}面向凯里及黔东南家庭提供新房装修、旧房翻新、局部改造与住宅设计服务。如有装修需求，可拨打装修咨询电话 <a href={company.tel}>{company.phone}</a>，先沟通房屋现状、户型与预算。</p></header>
       <div class="contact-page-grid">
         <section class="contact-page-details" aria-labelledby="contact-details-title"><h2 id="contact-details-title">电话与地址</h2><p>装修咨询电话</p><a class="contact-page-phone" href={company.tel}>{company.phone}</a><address><strong>{company.fullName}</strong><span>{company.address}</span></address><p>到访前建议先电话联系，确认地址与沟通安排。点击电话号码可使用设备的拨号功能。</p></section>
         <div class="article-prose">

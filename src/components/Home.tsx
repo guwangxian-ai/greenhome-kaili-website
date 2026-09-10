@@ -230,9 +230,11 @@ export default function Home() {
             <span>住成喜欢的样子。</span>
           </h1>
           <p className="hero-description hero-enter">
-            凯里绿色家装饰，服务凯里及黔东南家庭。
+            {company.fullName}，服务凯里及黔东南家庭。
             <br />
             新房装修、旧房翻新、局部改造与住宅设计。
+            <br />
+            装修咨询电话：<a href={company.tel}>{company.phone}</a>
           </p>
           <div className="hero-actions hero-enter">
             <button
@@ -684,7 +686,7 @@ export default function Home() {
                 <PhoneIcon size={19} aria-hidden="true" />
                 直接和我们聊聊
               </span>
-              <strong>198 8533 2380</strong>
+              <strong>{company.phone}</strong>
               <span>
                 点击拨打
                 <ArrowUpRightIcon size={17} aria-hidden="true" />

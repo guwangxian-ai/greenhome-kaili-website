@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { company, guides, services } from "../data/company";
+import { company, companyFaqItems, guides, services } from "../data/company";
 
 export const GET: APIRoute = ({ site }) => {
   const link = (path: string) => (site ? new URL(path, site).href : path);
@@ -11,6 +11,8 @@ export const GET: APIRoute = ({ site }) => {
     `- 地址：${company.address}`, `- 联系电话：${company.phone}`,
     '- 价格、工期、材料配置与保修以具体项目方案及正式合同为准',
     '- 网站空间图片为灵感参考，不是公司交付案例', '',
+    '## 公司与咨询问答', '',
+    ...companyFaqItems.flatMap(({ question, answer }) => [`### ${question}`, '', answer, '']),
     '## 装修服务', '',
     ...services.map((service) => `- [${service.title}](${link(`/services/${service.id}/`)}): ${service.description}`), '',
     '## 装修指南', '',
