@@ -50,6 +50,7 @@ export interface Guide {
 
 const companyName = "凯里绿色家装饰";
 const companyPhone = "19885332380";
+const companyStreetAddress = "城西街道迎宾大道77号隆源公馆商铺11-3-202";
 
 export const company: CompanyInfo = {
   fullName: companyName,
@@ -59,14 +60,14 @@ export const company: CompanyInfo = {
   phone: companyPhone,
   tel: `tel:${companyPhone}`,
   address:
-    "贵州省黔东南苗族侗族自治州凯里市城西街道迎宾大道77号隆源公馆商铺11-2-202",
+    `贵州省黔东南苗族侗族自治州凯里市${companyStreetAddress}`,
   shortAddress: "凯里市迎宾大道77号 · 隆源公馆",
   foundingDate: "2023-02-01",
   postalAddress: {
     addressCountry: "CN",
     addressRegion: "贵州省",
     addressLocality: "凯里市",
-    streetAddress: "城西街道迎宾大道77号隆源公馆商铺11-2-202",
+    streetAddress: companyStreetAddress,
   },
   serviceArea: ["凯里", "黔东南"],
   description:
@@ -141,7 +142,7 @@ export const faqItems: FaqItem[] = [
   {
     question: "凯里绿色家装饰在哪里？可以服务哪些地方？",
     answer:
-      "凯里绿色家装饰位于凯里市城西街道迎宾大道77号隆源公馆商铺11-2-202，主要服务凯里及黔东南地区。周边县市、乡镇项目需要结合位置、施工内容和现场管理条件确认，建议先电话沟通。",
+      `${company.fullName}位于${company.address}，主要服务凯里及黔东南地区。周边县市、乡镇项目需要结合位置、施工内容和现场管理条件确认，建议先电话沟通。`,
   },
   {
     question: "第一次咨询，需要准备什么？",

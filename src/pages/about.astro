@@ -19,7 +19,7 @@ const breadcrumbs = [{ name: '首页', path: '/' }, { name: '走近我们', path
       <div class="article-layout"><div class="article-prose">
         <section id="services"><h2>围绕住宅装修，提供适合的服务</h2><p>新房装修关注布局、材料和预算的整体安排；旧房翻新先评估原有房屋状况，再确定保留、维修与更换范围。厨房、卫生间等局部需求，则需要重点考虑与原有空间的衔接。</p><ul>{services.map((service) => <li><a href={`/services/${service.id}/`}>{service.title}：{service.shortDescription}</a></li>)}</ul></section>
         <section id="approach"><h2>把居住需求与施工细节一起考虑</h2><p>我们关注材料选择、施工规范和空间的实用性。装修前，先沟通常住人口、生活动线、收纳需求、预算与入住计划，再讨论设计风格和材料搭配。</p><p>讨论方案时，把工程范围、材料型号、费用包含项与变更处理方式说清楚。进入施工阶段后，围绕材料进场、隐蔽工程、节点验收和完工交付保留必要记录，让每一项选择都有具体依据。</p></section>
-        <section id="area"><h2>本地服务，从具体房屋情况开始</h2><p>公司位于凯里市迎宾大道77号隆源公馆，主要服务凯里及黔东南家庭。周边县市、乡镇项目需要结合交通位置、施工内容与现场管理条件确认。人在外地的业主，也可以先电话沟通凯里的房屋情况。</p></section>
+        <section id="area"><h2>本地服务，从具体房屋情况开始</h2><p>公司位于{company.address}，主要服务凯里及黔东南家庭。周边县市、乡镇项目需要结合交通位置、施工内容与现场管理条件确认。人在外地的业主，也可以先电话沟通凯里的房屋情况。</p></section>
         <aside class="article-callout"><h2>认识一家装修公司，从一次具体的交流开始。</h2><p>可以带上户型图、现场照片，以及最想解决的居住问题。到访前建议先电话联系，确认沟通安排。</p><a class="button button-primary" href="/contact/">查看电话与地址<span aria-hidden="true">↗</span></a></aside>
       </div><nav class="article-sidebar" aria-label="公司介绍目录"><p>了解凯里绿色家装饰</p><a href="#services">业务与服务</a><a href="#approach">我们的沟通思路</a><a href="#area">服务区域</a><a href="/contact/">联系公司</a></nav></div>
     </article>

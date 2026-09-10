@@ -4,7 +4,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { company } from '../data/company';
 const breadcrumbs = [{ name: '首页', path: '/' }, { name: '联系我们', path: '/contact/' }];
 ---
-<Layout title={`联系我们｜装修咨询电话 ${company.phone}｜凯里绿色家装饰`} description={`凯里绿色家装饰装修咨询电话 ${company.phone}，地址位于凯里市迎宾大道77号隆源公馆商铺11-2-202。了解服务区域、到访联系与首次咨询所需资料。`} pageType="ContactPage" breadcrumbs={breadcrumbs}>
+<Layout title={`联系我们｜装修咨询电话 ${company.phone}｜凯里绿色家装饰`} description={`凯里绿色家装饰装修咨询电话 ${company.phone}，地址位于${company.address}。了解服务区域、到访联系与首次咨询所需资料。`} pageType="ContactPage" breadcrumbs={breadcrumbs}>
   <main id="main-content" class="site-main">
     <article class="article-shell">
       <Breadcrumbs items={breadcrumbs} />

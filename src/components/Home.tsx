@@ -696,11 +696,7 @@ export default function Home() {
               <MapPinIcon size={20} aria-hidden="true" />
               <div>
                 <h3>在凯里，等你来坐坐。</h3>
-                <p>
-                  凯里市城西街道迎宾大道77号
-                  <br />
-                  隆源公馆商铺11-2-202
-                </p>
+                <p>{company.address}</p>
                 <button
                   className="contact-copy-address"
                   onClick={() => copyText(company.address, "address")}
